@@ -5,7 +5,7 @@
 const byte VinfeedPin = A5;
 const byte VxfeedPin = A4;
 const int Rpins[REFERENCE_R_NUM] = { 4, 5, 10, 7, 8, 9};
-const double Rvalues[REFERENCE_R_NUM] = { 99.9, 1002, 10.04E+03, 98.1E+03, 0.982E+06, 10.15E+06};
+const double Rvalues[REFERENCE_R_NUM] = { 99.9, 1000.2, 10.04E+03, 98.1E+03, 0.982E+06, 10.15E+06};
 
 const double VswitchUP = 4;
 const double VswitchDOWN = 5-VswitchUP;
