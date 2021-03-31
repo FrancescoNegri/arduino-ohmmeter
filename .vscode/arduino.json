@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:uno",
     "programmer": "arduino:avrisp",
-    "sketch": "arduino_ohmmeter.ino"
+    "output": ".\\build"
 }
