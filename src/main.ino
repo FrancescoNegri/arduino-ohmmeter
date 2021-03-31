@@ -74,19 +74,29 @@ void loop() {
 
 unsigned long getSampleTime(unsigned long currMillis) {
   sampleTimer = currMillis;
-  if (isFirstMeasure) {
-    initialTimeOffset = sampleTimer - sampleInterval;
-    isFirstMeasure = false;
-  }
+  unsigned long sampleTime;
 
-  unsigned long sampleTime = sampleTimer - sampleInterval - initialTimeOffset;
-  if (sampleTime - lastSampleTime != sampleInterval) {
+  // Gestisce inizializzazione timer da 0 s
+  if (isFirstMeasure) initialTimeOffset = sampleTimer - sampleInterval;
+
+  sampleTime = sampleTimer - sampleInterval - initialTimeOffset;
+
+  // Gestisce eventuali disallineamenti di qualche millisecondo
+  if ((sampleTime - lastSampleTime != sampleInterval) && (!isFirstMeasure)) {
     initialTimeOffset += sampleTime - lastSampleTime - sampleInterval;
     sampleTime = sampleTimer - sampleInterval - initialTimeOffset;
   }
 
+  if (isFirstMeasure) isFirstMeasure = false;
   lastSampleTime = sampleTime;
   return sampleTime;
+}
+
+void resetSampleTime() {
+  initialTimeOffset = 0;
+  isFirstMeasure = true;
+  lastSampleTime = 0;
+  sampleTimer = 0;
 }
 
 void selectRelayChannel() {
@@ -151,6 +161,7 @@ void handleIsEnabled() {
         else {
           digitalWrite(Rpins[selectedR], HIGH);
           writeReady();
+          resetSampleTime();
         }
         delay(relaySettlingTime);
       }
