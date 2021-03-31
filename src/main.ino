@@ -11,7 +11,7 @@ const double VswitchDOWN = 5-VswitchUP;
 
 int selectedR = 0;
 
-bool isEnabled = false;
+bool isEnabled = true;
 int buttonState;             // the current reading from the input pin
 int lastButtonState = LOW;   // the previous reading from the input pin
 int buttonPin = 13;
@@ -21,8 +21,11 @@ unsigned long debounceDelay = 50;
 const int relaySettlingTime = 40;
 
 unsigned long sampleTimer = 0;
-unsigned long sampleFreqHz = 20;
+const unsigned long sampleFreqHz = 20;
 unsigned long sampleInterval = 0;
+bool isFirstMeasure = true;
+unsigned long initialTimeOffset;
+unsigned long lastSampleTime;
 
 const int LCD_rsPin = 12, LCD_enPin = 11, LCD_contrastPin = 6;
 LiquidCrystal screen(LCD_rsPin, LCD_enPin, A0, A1, A2, A3);
@@ -58,17 +61,32 @@ void loop() {
   if (isEnabled) { 
     unsigned long currMillis = millis();   
     if (currMillis - sampleTimer >= sampleInterval) { // is it time for a sample?
-      sampleTimer = currMillis;
       selectRelayChannel();
-
       double Rx = measureResistance();
 
       writeResistance(Rx);
       Serial.print(Rx);
       Serial.print(";");
-      Serial.println(sampleTimer - sampleInterval); // So we have t0 = 0 s
+      Serial.println(getSampleTime(currMillis)); // So we have t0 = 0 s
     }
   }
+}
+
+unsigned long getSampleTime(unsigned long currMillis) {
+  sampleTimer = currMillis;
+  if (isFirstMeasure) {
+    initialTimeOffset = sampleTimer - sampleInterval;
+    isFirstMeasure = false;
+  }
+
+  unsigned long sampleTime = sampleTimer - sampleInterval - initialTimeOffset;
+  if (sampleTime - lastSampleTime != sampleInterval) {
+    initialTimeOffset += sampleTime - lastSampleTime - sampleInterval;
+    sampleTime = sampleTimer - sampleInterval - initialTimeOffset;
+  }
+
+  lastSampleTime = sampleTime;
+  return sampleTime;
 }
 
 void selectRelayChannel() {
