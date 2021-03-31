@@ -11,12 +11,13 @@ const double VswitchDOWN = 5-VswitchUP;
 
 int selectedR = 0;
 
-bool isEnabled = true;
+bool isEnabled = false;
+const int IS_NOT_ENABLED_CODE = -1;
 int buttonState;             // the current reading from the input pin
 int lastButtonState = LOW;   // the previous reading from the input pin
-int buttonPin = 13;
+const int buttonPin = 13;
 unsigned long lastDebounceTime = 0;
-unsigned long debounceDelay = 50;
+const unsigned long debounceDelay = 50;
 
 const int relaySettlingTime = 40;
 
@@ -161,6 +162,7 @@ void handleIsEnabled() {
         else {
           digitalWrite(Rpins[selectedR], HIGH);
           writeReady();
+          Serial.println(IS_NOT_ENABLED_CODE);
           resetSampleTime();
         }
         delay(relaySettlingTime);
