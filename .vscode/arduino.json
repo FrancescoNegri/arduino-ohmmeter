@@ -1,5 +1,6 @@
 {
     "board": "arduino:avr:uno",
     "programmer": "arduino:avrisp",
+    "sketch": ".\\src\\main.ino",
     "output": ".\\build"
 }
