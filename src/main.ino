@@ -2,9 +2,9 @@
 
 const byte VinfeedPin = A5;
 const byte VxfeedPin = A4;
-const int REFERENCE_R_NUM = 8;
-const int Rpins[REFERENCE_R_NUM] = { 3, 4, 8, 9, 10, 11, 12, 13};
-const double Rvalues[REFERENCE_R_NUM] = { 1.0, 9.8, 99.9, 1000.2, 10.04E+03, 98.1E+03, 0.982E+06, 10.15E+06};
+const int REFERENCE_R_NUM = 7;
+const int Rpins[REFERENCE_R_NUM] = { 4, 8, 9, 10, 11, 12, 13};
+const double Rvalues[REFERENCE_R_NUM] = { 9.8, 99.9, 1000.2, 10.04E+03, 98.1E+03, 0.982E+06, 10.15E+06};
 
 const double VswitchUP = 4;
 const double VswitchDOWN = 5-VswitchUP;
