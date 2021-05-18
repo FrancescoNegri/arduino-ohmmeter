@@ -2,9 +2,9 @@
 
 const byte VinfeedPin = A5;
 const byte VxfeedPin = A4;
-const int REFERENCE_R_NUM = 6;
-const int Rpins[REFERENCE_R_NUM] = { 4, 5, 10, 7, 8, 9};
-const double Rvalues[REFERENCE_R_NUM] = { 99.9, 1000.2, 10.04E+03, 98.1E+03, 0.982E+06, 10.15E+06};
+const int REFERENCE_R_NUM = 8;
+const int Rpins[REFERENCE_R_NUM] = { 3, 4, 8, 9, 10, 11, 12, 13};
+const double Rvalues[REFERENCE_R_NUM] = { 1.0, 9.8, 99.9, 1000.2, 10.04E+03, 98.1E+03, 0.982E+06, 10.15E+06};
 
 const double VswitchUP = 4;
 const double VswitchDOWN = 5-VswitchUP;
@@ -15,7 +15,7 @@ bool isEnabled = false;
 const int IS_NOT_ENABLED_CODE = -1;
 int buttonState;             // the current reading from the input pin
 int lastButtonState = LOW;   // the previous reading from the input pin
-const int buttonPin = 13;
+const int buttonPin = 2;
 unsigned long lastDebounceTime = 0;
 const unsigned long debounceDelay = 50;
 
@@ -28,7 +28,7 @@ bool isFirstMeasure = true;
 unsigned long initialTimeOffset;
 unsigned long lastSampleTime;
 
-const int LCD_rsPin = 12, LCD_enPin = 11, LCD_contrastPin = 6;
+const int LCD_rsPin = 7, LCD_enPin = 5, LCD_contrastPin = 6;
 LiquidCrystal screen(LCD_rsPin, LCD_enPin, A0, A1, A2, A3);
 const int CONTRAST = 125;
 
